@@ -60,7 +60,7 @@ jsonref==1.1.0
 jsonschema==4.23.0
 jsonschema-specifications==2024.10.1
 kubernetes==32.0.1
-litellm==1.60.2
+litellm==1.63.14
 markdown-it-py==3.0.0
 MarkupSafe==3.0.2
 matplotlib-inline==0.1.7
