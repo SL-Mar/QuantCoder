@@ -1,3 +1,11 @@
+# Python
 venv/
 __pycache__/
-*.pyc
+*.py[cod]
+
+# VS Code
+.vscode/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
