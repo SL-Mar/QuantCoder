@@ -9,3 +9,6 @@ __pycache__/
 # OS artifacts
 .DS_Store
 Thumbs.db
+
+# API keys
+.env
