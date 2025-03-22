@@ -9,7 +9,7 @@ QuantCoder is a full-stack application that leverages FastAPI on the backend and
 
 ## Legacy Version
 
-The initial release, known as **QuantCoder_FS**, is preserved in the `quantcoder-legacy` branch. It contains the original implementation along with its technical documentation. Please refer to that branch if you need to review the previous architecture or implementation details.
+The initial release, known as **QuantCoder**, is preserved in the `quantcoder-legacy` branch. It contains the original implementation along with its technical documentation. Please refer to that branch if you need to review the previous architecture or implementation details.
 
 ## New Project Roadmap
 
