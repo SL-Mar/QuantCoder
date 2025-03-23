@@ -40,4 +40,4 @@ To be defined at a later stage.
 
 ![Star History Chart](https://api.star-history.com/svg?repos=SL-Mar/QuantCoder&type=Date&width=200&height=100)
 
-
+<img src="https://api.star-history.com/svg?repos=SL-Mar/QuantCoder&type=Date" style="width: 400px; height: 200px;">
