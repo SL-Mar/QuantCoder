@@ -38,6 +38,6 @@ To be defined at a later stage.
 
 ## Star history
 
-![Star History Chart](https://api.star-history.com/svg?repos=SL-Mar/QuantCoder&type=Date)
+![Star History Chart](https://api.star-history.com/svg?repos=SL-Mar/QuantCoder&type=Date&width=600&height=300)
 
 
