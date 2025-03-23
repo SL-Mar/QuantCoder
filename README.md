@@ -37,7 +37,4 @@ This documentation serves as a reference for the new development efforts.
 To be defined at a later stage.
 
 ## Star history
-
-![Star History Chart](https://api.star-history.com/svg?repos=SL-Mar/QuantCoder&type=Date&width=200&height=100)
-
-<img src="https://api.star-history.com/svg?repos=SL-Mar/QuantCoder&type=Date" style="width: 400px; height: 200px;">
+<img src="https://api.star-history.com/svg?repos=SL-Mar/QuantCoder&type=Date" style="width: 500px; height: 300px;">
