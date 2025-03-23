@@ -1,37 +1,139 @@
-# QuantCoder FS 
+# QuantCoder_FS — Full-Stack AI Assistant for Traders
 
-## Overview
+QuantCoder_FS is a full-stack, AI-driven application that streamlines financial research and trading strategy development. The current open-source version focuses on the PDF summarization workflow, implemented as a FastAPI backend powered by CrewAI agents. Future updates will introduce a frontend (Next.js) and additional workflows, including fundamentals analysis and algorithmic code generation.
 
-QuantCoder is a full-stack application that leverages FastAPI on the backend and CrewAI for orchestrating various LLM-powered agents to perform tasks such as summarization, coding, fundamentals analysis, and more.
+This public release is a clean refactoring of a previously completed private version of the app, which is already fully functional. Screenshots of the full-stack implementation are available in the QuantCoder_FS_Demo folder.
+ 
 
-> **Important:**  
-> The previous version of this project has been moved to the `quantcoder-legacy` branch. The main branch is now reserved for developing the new version of QuantCoder from scratch.
+---
 
-## Legacy Version
+## 🚀 Quickstart (Backend Only)
 
-The initial release, known as **QuantCoder_FS**, is preserved in the `quantcoder-legacy` branch. It contains the original implementation along with its technical documentation. Please refer to that branch if you need to review the previous architecture or implementation details.
+### 1. Clone the repository
 
-## New Project Roadmap
+```bash
+git clone https://github.com/SL-Mar/QuantCoder.git
+cd QuantCoder
+git checkout dev
+```
 
-- **Current Focus:**  
-  The first workflow (e.g., summarization) is being rebuilt on the main branch as the foundation for the new version.
+### 2. Set up the environment (Windows)
 
-- **Future Workflows:**  
-  Additional workflows (Fundamentals, Research, Coding, etc.) will be integrated incrementally. Each new release will be documented in detail via Medium articles and updated release notes in this repository.
+```bash
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+```
 
-- **Goals:**  
-  - Improve code modularity and maintainability.
-  - Enhance scalability for adding or modifying workflows.
-  - Foster community collaboration through clear documentation and a structured codebase.
+### 3. Configure your `.env` file in the root directory
 
-## Technical Documentation (Pre-Open Source Release)
+```env
+OPENAI_API_KEY=sk-...
+MODEL_NAME=gpt-4
+```
 
-The technical documentation of the application is available at :
-[**QuantCoder_FS documentation**](https://medium.com/@sl_mar/quantcoder-fs-the-backend-architecture-9d703ae48df6) 
+### 4. Start the backend
 
-which outlines the architecture and design principles. 
-This documentation serves as a reference for the new development efforts.
+Use the batch file:
 
-## Licence
+```bash
+start-app.bat
+```
 
-To be defined at a later stage.
+Or manually:
+
+```bash
+uvicorn backend.main:app --reload --port 8000
+```
+
+---
+
+## 🔍 Access the API
+
+Once running, open your browser at:
+
+📄 [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
+You’ll find the **interactive documentation** of the Summarization API there.
+
+---
+
+## 🧐 Current Workflow: Summarization
+
+This initial release delivers QuantCoder’s first AI-powered workflow.
+
+### ✨ Features:
+
+- Upload a PDF
+- Automatically extract and summarize financial insights
+- Return a structured JSON response
+
+### 📦 Folder Structure (`backend/` only)
+
+```
+backend/
+├── core/                  # Configuration, logging, cost tracking
+│   ├── config.py
+│   ├── logger_config.py
+│   └── llm_cost.py
+├── routers/               # FastAPI endpoints
+│   └── summarizer.py
+├── agents/                # CrewAI agent definitions
+│   └── summarization_agents.py
+├── workflows/             # Crew orchestration logic
+│   └── summarization_workflow.py
+├── models/                # Pydantic schemas
+│   └── summarymodel.py
+└── utils/                 # File I/O helpers
+    └── file_utils.py
+```
+
+### 🧪 Pydantic Response Model
+
+```python
+class SummaryResponse(BaseModel):
+    filename: str
+    summary: str
+```
+
+---
+
+## 🛠 Future Development
+
+- ✅ Current: Summarization backend only
+- 🔜 Next: Frontend integration (Next.js)
+- 📈 Roadmap: Additional workflows (Fundamentals, CodeGen, Risk, Forecasting...)
+
+---
+
+## 🔭 Legacy Version
+
+The original CLI-based QuantCoder is preserved in the `quantcoder-legacy` branch.
+
+It includes:
+
+- Article search and PDF summarization
+- Trading strategy generation for QuantConnect
+- A simple command-line interface
+
+If you're interested in the roots of this project, you can switch to it:
+
+```bash
+git checkout quantcoder-legacy
+```
+
+And follow its dedicated [README](https://github.com/SL-Mar/QuantCoder/blob/quantcoder-legacy/README.md).
+
+---
+
+## 📄 License
+
+To be defined. This project is currently open for contribution and collaboration.
+
+---
+
+## 📚 Related Reading
+
+- 📘 [QuantCoder_FS Documentation](https://medium.com/@sl_mar/quantcoder-fs-documentation-6fc79915e287)
+- 📘 [Towards Automating Quantitative Finance Research](https://medium.com/ai-advances/towards-automating-quantitative-finance-research-c868a2a6477e)
+

@@ -1,14 +1,32 @@
-# Python
+# Python virtual environment
 venv/
 __pycache__/
-*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+*.log
 
-# VS Code
-.vscode/
-
-# OS artifacts
-.DS_Store
-Thumbs.db
-
-# API keys
+# Environment files
 .env
+.env.*
+
+# Node.js / Next.js (frontend)
+node_modules/
+.next/
+out/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Build artifacts
+build/
+dist/
+*.sqlite3
+
+# VSCode and IDE config
+.vscode/
+.idea/
+.DS_Store
+
+# Packaging metadata
+*.egg-info/
