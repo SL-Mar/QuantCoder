@@ -36,4 +36,8 @@ This documentation serves as a reference for the new development efforts.
 
 To be defined at a later stage.
 
-<iframe style="width:100%;height:auto;min-width:600px;min-height:400px;" src="https://www.star-history.com/embed?secret=Z2hwX05Hcmo4NXNYZHRCcVBUYlk4d0ZoR0Z2TUZSaU5HUzNyeDgxNw==#SL-Mar/QuantCoder&Date" frameBorder="0"></iframe>
+## Star history
+
+![Star History Chart](https://www.star-history.com/embed?secret=Z2hwX05Hcmo4NXNYZHRCcVBUYlk4d0ZoR0Z2TUZSaU5HUzNyeDgxNw==#SL-Mar/QuantCoder&Date)
+
+
