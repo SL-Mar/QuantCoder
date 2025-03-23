@@ -27,7 +27,7 @@ The initial release, known as **QuantCoder**, is preserved in the `quantcoder-le
 ## Technical Documentation (Pre-Open Source Release)
 
 The technical documentation of the application is available at :
-[**QuantCoder_FS documentation**](https://medium.com/@sl_mar/quantcoder-fs-the-backend-architecture-9d703ae48df6) 
+[**QuantCoder_FS documentation**](https://medium.com/@sl_mar/quantcoder-fs-documentation-6fc79915e287?sk=1013c8e27cd8113ddeb8259b1ddf1939)
 
 which outlines the architecture and design principles. 
 This documentation serves as a reference for the new development efforts.
