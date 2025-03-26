@@ -3,6 +3,8 @@ from langchain_openai import ChatOpenAI
 from backend.agents.summarization_agents import insights_extraction_agent, summary_synthesis_agent
 from backend.models.summarymodel import SummaryResponse
 from backend.core.config import settings
+from langchain_mistralai import ChatMistralAI
+
 
 manager_llm = ChatOpenAI(model=settings.model_name, api_key=settings.openai_api_key, temperature=0)
 

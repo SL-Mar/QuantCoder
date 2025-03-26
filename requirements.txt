@@ -98,6 +98,7 @@ langchain-cohere==0.3.5
 langchain-community==0.3.20
 langchain-core==0.3.47
 langchain-experimental==0.3.4
+langchain-mistralai==0.2.9
 langchain-openai==0.2.14
 langchain-text-splitters==0.3.7
 langsmith==0.1.147

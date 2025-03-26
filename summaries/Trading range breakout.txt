@@ -1,0 +1,30 @@
+### **Momentum Trading Strategy Summary**  
+
+#### **Core Strategy:**  
+This strategy follows a **momentum-based approach**, relying on **Trading Range Breakout (TRB) rules** and **moving averages** to capture trends. It operates on **daily price movements**, identifying buy signals when the price breaks above a recent high by a pre-specified band and sell signals when the price drops below a recent low by the same band. Additionally, a **dual moving average system** (one short-term, one long-term) is used to confirm entry and exit points.  
+
+#### **Stock Selection:**  
+The strategy focuses on **liquid stocks** with sufficient **trading volume** to minimize slippage and transaction costs. Stocks must exhibit clear momentum characteristics, avoiding those in choppy or sideways markets.  
+
+#### **Trade Signals:**  
+- **Buy Signal:** Price exceeds the previous peak by a specified margin, indicating an upward trend.  
+- **Sell Signal:** Price drops below the previous minimum by a specified margin, signaling a downward trend.  
+- **Moving Averages:** A crossover of a short-term moving average above a long-term moving average strengthens buy signals, while a downward crossover reinforces sell signals.  
+
+---
+
+### **Risk Management Rules**  
+
+#### **Stop Loss & Position Sizing:**  
+- Stop-loss levels are set based on **a percentage of the Average True Range (ATR)** (e.g., **10% ATR**).  
+- Risk per trade is limited to **1% of total capital**, ensuring controlled losses.  
+
+#### **Exit Conditions:**  
+- Positions are closed if the price **reverses beyond the stop-loss level** or if a **counter-signal** is triggered.  
+- Trades may also be exited at the **end of the trading day** to avoid overnight risk.  
+
+#### **Additional Constraints:**  
+- **Leverage is capped at 4x** to prevent excessive exposure.  
+- The strategy prioritizes **high-momentum stocks** to maximize efficiency.  
+
+This structured approach ensures disciplined execution while managing risk effectively.

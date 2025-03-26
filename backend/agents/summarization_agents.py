@@ -18,6 +18,7 @@ insights_extraction_agent = Agent(
         "research gaps, and theoretical contributions in academic papers."
     ),
     verbose=True,
+    llm = "gpt-3.5-turbo",
     allow_delegation=False,
     tools=[pdf_search_tool],
 )
@@ -36,6 +37,7 @@ summary_synthesis_agent = Agent(
         "You excel at transforming complex research into clear, publication-ready manuscripts "
         "while maintaining academic standards and technical precision."
     ),
+    llm = "gpt-3.5-turbo",
     verbose=True,
     allow_delegation=False,
     tools=[],

@@ -1,0 +1,33 @@
+### **Trading Strategy Summary**  
+
+#### **Core Strategy**  
+The strategy employs **OW-XGBoost**, a machine learning-based model that integrates multiple return and risk indicators using **fusing labels with optimal weights**. It focuses on large-cap stocks with strong liquidity and industry balance, primarily trading stocks from indices such as **CSI 300, CSI 100, and CSI 800**. The model uses a **sliding window approach** to retain time-series characteristics and improve predictive accuracy.  
+
+#### **Stock Selection**  
+- **Focus on large-cap stocks** due to higher liquidity and lower susceptibility to price manipulation.  
+- **Excludes ST stocks** and those **listed for less than six months** to avoid unreliable data.  
+- **Avoids short-selling**, as it is challenging in the Chinese market.  
+
+#### **Trade Signals**  
+- The model identifies **buy opportunities** based on a combination of return metrics (rate of return, excess return) and risk controls (volatility, drawdown).  
+- **No short-selling** is considered.  
+- Trades are executed when conditions align with the optimized fusing labels, ensuring a balance between risk and return.  
+
+---
+
+### **Risk Management Rules**  
+
+#### **Stop Loss & Position Sizing**  
+- The strategy controls risk through **maximum drawdown limits**, ensuring losses do not exceed predefined thresholds.  
+- Position sizing is dynamically adjusted based on **Sharpe ratio and volatility metrics**, favoring stocks with **higher risk-adjusted returns**.  
+
+#### **Exit Conditions**  
+- Positions are closed based on a combination of **return and risk thresholds**, ensuring that excessive volatility does not erode gains.  
+- **Monthly rebalancing** is preferred over weekly adjustments to reduce transaction costs and improve stability.  
+
+#### **Additional Constraints**  
+- **Leverage is not explicitly mentioned**, but the model prioritizes **low-volatility stocks** to maintain stability.  
+- The strategy consistently **outperforms traditional benchmarks** such as CSI 300, exhibiting **lower volatility and drawdowns** while maintaining high returns.  
+
+**Conclusion:**  
+OW-XGBoost provides a robust, **machine-learning-driven approach** to stock selection, balancing **high returns with controlled risk**. It is particularly effective in stable and turbulent markets but may experience **drawdowns during extreme market crashes**.
