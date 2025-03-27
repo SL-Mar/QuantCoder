@@ -139,4 +139,5 @@ To be defined. This project is currently open for contribution and collaboration
 
 
 ## Star history
-<img src="https://api.star-history.com/svg?repos=SL-Mar/QuantCoder-FS&type=Date" style="width: 500px; height: 300px;">
+
+[![Star History Chart](https://api.star-history.com/svg?repos=SL-Mar/QuantCoder-FS&type=Date)](https://www.star-history.com/#SL-Mar/QuantCoder-FS&Date)
