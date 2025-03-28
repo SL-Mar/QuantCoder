@@ -1,5 +1,7 @@
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useAuth } from '../lib/useAuth';
 import SummaryViewer from '../components/SummaryViewer';
 import SavedSummariesList from '../components/SavedSummariesList';
 import { Summary } from '../types/summary';
@@ -8,6 +10,9 @@ import { api } from '../lib/api';
 const PDFViewer = dynamic(() => import('../components/PDFViewer'), { ssr: false });
 
 export default function SummariesPage() {
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [summary, setSummary] = useState<Summary | null>(null);
   const [savedSummaries, setSavedSummaries] = useState<string[]>([]);
@@ -15,8 +20,16 @@ export default function SummariesPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchSummaries();
-  }, []);
+    if (!loading && user === null) {
+      router.push('/login?next=/summarisation');
+    }
+  }, [user, loading]);
+
+  useEffect(() => {
+    if (!loading && user) {
+      fetchSummaries();
+    }
+  }, [loading, user]);
 
   const fetchSummaries = async () => {
     try {
@@ -26,6 +39,14 @@ export default function SummariesPage() {
       setError(err.message);
     }
   };
+
+  if (loading) {
+    return <div className="text-white p-6">Checking login status…</div>;
+  }
+
+  if (!user) {
+    return <div className="text-white p-6">Redirecting to login…</div>;
+  }
 
   const handleExtract = async () => {
     if (!selectedFile) return;
@@ -102,7 +123,6 @@ export default function SummariesPage() {
             onExtractSummary={handleExtract}
             isLoading={isLoading}
           />
-
         </section>
 
         {/* Summary Viewer */}

@@ -63,3 +63,7 @@ npm-cache
 
 # Yarn Integrity file
 .yarn-integrity
+
+# Summaries
+summaries/
+

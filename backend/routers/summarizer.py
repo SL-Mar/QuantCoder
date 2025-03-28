@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, UploadFile, File
+from fastapi import APIRouter, HTTPException, UploadFile, File, Depends
 from fastapi.responses import FileResponse
 from backend.workflows.summarization_workflow import summarization_workflow
 from backend.models.summarymodel import SummaryResponse
@@ -6,6 +6,8 @@ from backend.utils.file_utils import save_uploaded_file, save_file, delete_file,
 from backend.core.logger_config import logger
 from backend.core.llm_cost import LLMCost
 from backend.core.config import settings
+from backend.utils.auth_utils import get_current_user
+
 import os, traceback
 from tempfile import NamedTemporaryFile
 
@@ -18,7 +20,10 @@ async def ping():
     return {"status": "pong"}
 
 @router.post("/extract", response_model=SummaryResponse)
-async def extract_scientific_summary(file: UploadFile = File(...)):
+async def extract_scientific_summary(
+    file: UploadFile = File(...),
+    current_user: str = Depends(get_current_user)
+):
     try:
         logger.info(f"Received file: {file.filename}")
 
@@ -42,9 +47,11 @@ async def extract_scientific_summary(file: UploadFile = File(...)):
         logger.error("Error during summarization", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
-
 @router.get("/load/{filename}", response_model=dict)
-async def load_summary(filename: str):
+async def load_summary(
+    filename: str,
+    current_user: str = Depends(get_current_user)
+):
     path = os.path.join(SUMMARY_STORAGE_DIR, filename if filename.endswith(".txt") else f"{os.path.splitext(filename)[0]}.txt")
     if not os.path.exists(path):
         raise HTTPException(status_code=404, detail="Summary file not found")
@@ -52,24 +59,33 @@ async def load_summary(filename: str):
         return {"message": "Summary loaded successfully", "content": f.read(), "filename": filename}
 
 @router.post("/save", response_model=dict)
-async def save_summary(data: SummaryResponse):
+async def save_summary(
+    data: SummaryResponse,
+    current_user: str = Depends(get_current_user)
+):
     filename = f"{os.path.splitext(data.filename)[0]}.txt"
     path = os.path.join(SUMMARY_STORAGE_DIR, filename)
     save_file(path, data.summary)
     return {"message": "Summary saved successfully", "filename": filename}
 
 @router.get("/list", response_model=dict)
-async def get_summaries():
+async def get_summaries(current_user: str = Depends(get_current_user)):
     return {"summaries": list_summaries()}
 
 @router.delete("/{filename}", response_model=dict)
-async def delete_summary(filename: str):
+async def delete_summary(
+    filename: str,
+    current_user: str = Depends(get_current_user)
+):
     path = os.path.join(SUMMARY_STORAGE_DIR, filename)
     delete_file(path)
     return {"message": "Summary deleted successfully"}
 
 @router.get("/pdf/{filename}")
-async def get_pdf(filename: str):
+async def get_pdf(
+    filename: str,
+    current_user: str = Depends(get_current_user)
+):
     path = f"path/to/pdfs/{filename}"
     if os.path.exists(path):
         return FileResponse(path, media_type="application/pdf")

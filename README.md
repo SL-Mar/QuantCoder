@@ -2,186 +2,162 @@
 
 # QuantCoder_FS — Full-Stack AI Assistant for Traders
 
-QuantCoder_FS is a full-stack, AI-driven application that streamlines financial research and trading strategy development. The current open-source version focuses on the PDF summarization workflow, implemented as a FastAPI backend powered by CrewAI agents, and now includes a responsive **Next.js frontend** for a seamless user experience. Future updates will introduce additional workflows such as fundamentals analysis and algorithmic code generation.
+QuantCoder_FS is a full-stack application for quantitative finance research and trading strategy development. It leverages LLM-driven workflows and integrates them into a modular, user-friendly platform. This open-source release focuses on the summarization workflow, with other workflows in development including fundamentals analysis, strategy generation, forecasting, and risk evaluation.
 
-This public release is a clean refactoring of a previously completed private version of the app, which is already fully functional. Screenshots of the full-stack implementation are available in the `QuantCoder_FS_Demo` folder.
+This repository includes a FastAPI backend (with CrewAI-powered agents) and a responsive Next.js frontend. A preview of the complete working interface is available in the `QuantCoder_FS_Demo` folder.
 
 ---
 
-## 🚀 Quickstart (Backend Only)
+## Architecture Overview
+
+The application is structured as a modular full-stack platform:
+
+- **Backend**: FastAPI application with modular routers, agents, and workflow orchestration
+- **Frontend**: Next.js with Tailwind styling, featuring dynamic components and JWT-based authentication
+- **Communication**: RESTful API endpoints with secure token-based access control
+
+---
+
+## Authentication
+
+QuantCoder_FS features a secure, stateless authentication system based on JWT tokens.
+
+- Login via `/login` stores token in `localStorage`
+- Protected routes (e.g., `/summarisation`) validate token presence and redirect if unauthenticated
+- Token decoding and user state are handled via a custom React hook (`useAuth`)
+- Role-based access control and token refresh support are planned
+
+---
+
+## Quickstart Guide
 
 ### 1. Clone the repository
-
 ```bash
 git clone https://github.com/SL-Mar/QuantCoder.git
 cd QuantCoder
 git checkout dev
 ```
 
-### 2. Set up the environment (Windows)
-
+### 2. Backend Setup (Windows)
 ```bash
 python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 3. Configure your `.env` file in the root directory
-
+Configure `.env` with your OpenAI API key:
 ```env
 OPENAI_API_KEY=sk-...
 MODEL_NAME=gpt-4
 ```
 
-### 4. Start the backend
-
-Use the batch file:
-
-```bash
-start-app.bat
-```
-
-Or manually:
-
+Start the backend:
 ```bash
 uvicorn backend.main:app --reload --port 8000
 ```
 
----
+Access API documentation: [http://localhost:8000/docs](http://localhost:8000/docs)
 
-## 🎨 Frontend (Next.js)
-
-The frontend is a modern, Tailwind-powered React interface using Next.js.
-
-### ✨ Features:
-- Drag-and-drop PDF upload and preview
-- Summary viewer with LaTeX-style formatting
-- Inline extract and save actions with toast notifications
-- Sidebar displaying saved summaries in a file-explorer style
-- FontAwesome icons for enhanced UX
-
-### 🧭 Structure
-```
-frontend/
-├── components/
-│   ├── PDFViewer.tsx
-│   ├── SummaryViewer.tsx
-│   └── SavedSummariesList.tsx
-├── lib/
-│   └── api.ts
-├── pages/
-│   └── summarisation.tsx
-└── public/
-    └── test.pdf
-```
-
-### ⚙️ Dev Instructions
-Run inside the `frontend/` directory:
-
+### 3. Frontend Setup
 ```bash
+cd frontend
 npm install
 npm run dev
 ```
 
-Frontend available at: [http://localhost:3000/summarisation](http://localhost:3000/summarisation)
+Open [http://localhost:3000/summarisation](http://localhost:3000/summarisation)
 
-Ensure your backend is running and CORS/proxy settings are aligned via `next.config.js`.
-
----
-
-## 🔍 Access the API
-
-Once the backend is running, open your browser at:
-
-📄 [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-
-You’ll find the **interactive documentation** of the Summarization API there.
+Ensure backend is running. Proxy settings can be configured in `next.config.js`.
 
 ---
 
-## 🧐 Current Workflow: Summarization
+## Current Workflow: Summarization
 
-This initial release delivers QuantCoder’s first AI-powered workflow.
+The summarization workflow enables AI-assisted extraction of insights from uploaded PDF documents.
 
-### ✨ Features:
+### Features
+- Drag-and-drop PDF upload with preview
+- On-demand summarization via backend workflow
+- Summary rendering with LaTeX-style formatting
+- Save/load/delete summaries with persistent state
+- Sidebar view of all saved summaries
 
-- Upload a PDF
-- Automatically extract and summarize financial insights
-- Return a structured JSON response
-
-### 📦 Folder Structure (`backend/` only)
-
+### Backend Structure
 ```
 backend/
-├── core/                  # Configuration, logging, cost tracking
-│   ├── config.py
-│   ├── logger_config.py
-│   └── llm_cost.py
-├── routers/               # FastAPI endpoints
-│   └── summarizer.py
-├── agents/                # CrewAI agent definitions
-│   └── summarization_agents.py
-├── workflows/             # Crew orchestration logic
-│   └── summarization_workflow.py
+├── core/                  # Configuration, logging, usage tracking
+├── routers/               # API endpoints (auth, summarizer)
+├── agents/                # CrewAI agents for summarization
+├── workflows/             # Summarization workflow orchestration
 ├── models/                # Pydantic schemas
-│   └── summarymodel.py
-└── utils/                 # File I/O helpers
-    └── file_utils.py
+└── utils/                 # File and authentication utilities
 ```
 
-### 🥪 Pydantic Response Model
-
-```python
-class SummaryResponse(BaseModel):
-    filename: str
-    summary: str
+### Frontend Structure
+```
+frontend/
+├── components/            # PDF and summary viewers, sidebar
+├── lib/                   # Token-aware API layer and auth hook
+├── pages/                 # Login and protected summarisation page
+└── public/                # Test files and assets
 ```
 
 ---
 
-## 🛠 Future Development
+## Planned Workflows
 
-- ✅ Current: Summarization workflow with frontend + backend
-- 🕸️ Next: Add workflows (Fundamentals, CodeGen, Risk, Forecasting...)
-- 🪄 Improve summary formatting with LateX-like rendering and code output handling
+QuantCoder_FS is designed for extensibility. The following workflows are planned:
+
+- Fundamentals Analysis (via EODHD API)
+- Code Generation for QuantConnect
+- Risk Modeling (including VaR and Monte Carlo tools)
+- Time Series Forecasting (XGBoost-based pipeline)
+- Investment Scoring & Lead Evaluation
+
+Each workflow will include both backend orchestration and frontend interface components.
 
 ---
 
-## 🔭 Legacy Version
+## Legacy CLI Version
 
-The original CLI-based QuantCoder is preserved in the `quantcoder-legacy` branch.
-
-It includes:
+The original prototype (QuantCoder CLI) is available on the `quantcoder-legacy` branch. It includes:
 
 - Article search and PDF summarization
 - Trading strategy generation for QuantConnect
-- A simple command-line interface
+- CLI interface
 
-If you're interested in the roots of this project, you can switch to it:
-
+To access:
 ```bash
 git checkout quantcoder-legacy
 ```
 
-And follow its dedicated [README](https://github.com/SL-Mar/QuantCoder/blob/quantcoder-legacy/README.md).
+---
+
+## License
+
+QuantCoder_FS is distributed under the **Apache License 2.0**.
+
+You may use, modify, and redistribute this software under the terms of the license. See the [LICENSE](LICENSE.md) file for full terms.
 
 ---
 
-## 📄 License
+## Related Articles
 
-This project is licensed under the **Apache License 2.0**. See the [LICENSE](LICENSE.md) file for full details.
-
-The Apache License 2.0 allows you to freely use, modify, and distribute this project, provided you include the original copyright notice and the license text. For more information, visit the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) website.
-
-This project is open for contribution and collaboration. Feel free to fork, submit issues, and create pull requests!
+- [QuantCoder_FS Technical Documentation](https://medium.com/@sl_mar/quantcoder-fs-documentation-6fc79915e287)
+- [Automating Quantitative Finance Research](https://medium.com/ai-advances/towards-automating-quantitative-finance-research-c868a2a6477e)
 
 ---
 
-## 📙 Related Reading
+## Star History
 
-- 📘 [QuantCoder_FS Documentation](https://medium.com/@sl_mar/quantcoder-fs-documentation-6fc79915e287)
-- 📘 [Towards Automating Quantitative Finance Research](https://medium.com/ai-advances/towards-automating-quantitative-finance-research-c868a2a6477e)
+[![Star History Chart](https://api.star-history.com/svg?repos=SL-Mar/QuantCoder-FS&type=Date)](https://www.star-history.com/#SL-Mar/QuantCoder-FS&Date)
 
+---
+
+For issues or contributions, feel free to open a pull request or submit a GitHub issue. 
+
+
+---
 ## ⭐ Star history
 
 [![Star History Chart](https://api.star-history.com/svg?repos=SL-Mar/QuantCoder-FS&type=Date)](https://www.star-history.com/#SL-Mar/QuantCoder-FS&Date)

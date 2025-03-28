@@ -15,6 +15,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware  # clearly import this
 from backend.routers.summarizer import router
+from backend.routers import auth
 
 app = FastAPI(title="QuantCoder API")
 
@@ -26,6 +27,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth.router)
 app.include_router(router, prefix="/summarizer")
 
 if __name__ == "__main__":
