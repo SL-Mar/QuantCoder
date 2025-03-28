@@ -1,3 +1,5 @@
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 # QuantCoder_FS — Full-Stack AI Assistant for Traders
 
 QuantCoder_FS is a full-stack, AI-driven application that streamlines financial research and trading strategy development. The current open-source version focuses on the PDF summarization workflow, implemented as a FastAPI backend powered by CrewAI agents, and now includes a responsive **Next.js frontend** for a seamless user experience. Future updates will introduce additional workflows such as fundamentals analysis and algorithmic code generation.
