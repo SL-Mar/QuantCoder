@@ -148,12 +148,6 @@ You may use, modify, and redistribute this software under the terms of the licen
 
 ---
 
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=SL-Mar/QuantCoder-FS&type=Date)](https://www.star-history.com/#SL-Mar/QuantCoder-FS&Date)
-
----
-
 For issues or contributions, feel free to open a pull request or submit a GitHub issue. 
 
 
