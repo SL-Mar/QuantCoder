@@ -1,9 +1,8 @@
 # QuantCoder_FS — Full-Stack AI Assistant for Traders
 
-QuantCoder_FS is a full-stack, AI-driven application that streamlines financial research and trading strategy development. The current open-source version focuses on the PDF summarization workflow, implemented as a FastAPI backend powered by CrewAI agents. Future updates will introduce a frontend (Next.js) and additional workflows, including fundamentals analysis and algorithmic code generation.
+QuantCoder_FS is a full-stack, AI-driven application that streamlines financial research and trading strategy development. The current open-source version focuses on the PDF summarization workflow, implemented as a FastAPI backend powered by CrewAI agents, and now includes a responsive **Next.js frontend** for a seamless user experience. Future updates will introduce additional workflows such as fundamentals analysis and algorithmic code generation.
 
-This public release is a clean refactoring of a previously completed private version of the app, which is already fully functional. Screenshots of the full-stack implementation are available in the QuantCoder_FS_Demo folder.
- 
+This public release is a clean refactoring of a previously completed private version of the app, which is already fully functional. Screenshots of the full-stack implementation are available in the `QuantCoder_FS_Demo` folder.
 
 ---
 
@@ -48,9 +47,49 @@ uvicorn backend.main:app --reload --port 8000
 
 ---
 
+## 🎨 Frontend (Next.js)
+
+The frontend is a modern, Tailwind-powered React interface using Next.js.
+
+### ✨ Features:
+- Drag-and-drop PDF upload and preview
+- Summary viewer with LaTeX-style formatting
+- Inline extract and save actions with toast notifications
+- Sidebar displaying saved summaries in a file-explorer style
+- FontAwesome icons for enhanced UX
+
+### 🧭 Structure
+```
+frontend/
+├── components/
+│   ├── PDFViewer.tsx
+│   ├── SummaryViewer.tsx
+│   └── SavedSummariesList.tsx
+├── lib/
+│   └── api.ts
+├── pages/
+│   └── summarisation.tsx
+└── public/
+    └── test.pdf
+```
+
+### ⚙️ Dev Instructions
+Run inside the `frontend/` directory:
+
+```bash
+npm install
+npm run dev
+```
+
+Frontend available at: [http://localhost:3000/summarisation](http://localhost:3000/summarisation)
+
+Ensure your backend is running and CORS/proxy settings are aligned via `next.config.js`.
+
+---
+
 ## 🔍 Access the API
 
-Once running, open your browser at:
+Once the backend is running, open your browser at:
 
 📄 [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
@@ -88,7 +127,7 @@ backend/
     └── file_utils.py
 ```
 
-### 🧪 Pydantic Response Model
+### 🥪 Pydantic Response Model
 
 ```python
 class SummaryResponse(BaseModel):
@@ -100,9 +139,9 @@ class SummaryResponse(BaseModel):
 
 ## 🛠 Future Development
 
-- ✅ Current: Summarization backend only
-- 🔜 Next: Frontend integration (Next.js)
-- 📈 Roadmap: Additional workflows (Fundamentals, CodeGen, Risk, Forecasting...)
+- ✅ Current: Summarization workflow with frontend + backend
+- 🕸️ Next: Add workflows (Fundamentals, CodeGen, Risk, Forecasting...)
+- 🪄 Improve summary formatting with LateX-like rendering and code output handling
 
 ---
 
@@ -132,12 +171,12 @@ To be defined. This project is currently open for contribution and collaboration
 
 ---
 
-## 📚 Related Reading
+## 📙 Related Reading
 
 - 📘 [QuantCoder_FS Documentation](https://medium.com/@sl_mar/quantcoder-fs-documentation-6fc79915e287)
 - 📘 [Towards Automating Quantitative Finance Research](https://medium.com/ai-advances/towards-automating-quantitative-finance-research-c868a2a6477e)
 
-
-## Star history
+## ⭐ Star history
 
 [![Star History Chart](https://api.star-history.com/svg?repos=SL-Mar/QuantCoder-FS&type=Date)](https://www.star-history.com/#SL-Mar/QuantCoder-FS&Date)
+
