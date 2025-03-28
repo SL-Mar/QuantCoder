@@ -7,8 +7,9 @@ from backend.core.logger_config import logger
 from backend.core.llm_cost import LLMCost
 from backend.core.config import settings
 import os, traceback
+from tempfile import NamedTemporaryFile
 
-router = APIRouter(prefix="/summarizer", tags=["Summarization"])
+router = APIRouter(tags=["Summarization"])
 process_name = "Summarization"
 SUMMARY_STORAGE_DIR = os.getenv("SUMMARY_STORAGE_DIR", os.path.join(os.getcwd(), "summaries"))
 
@@ -16,18 +17,27 @@ SUMMARY_STORAGE_DIR = os.getenv("SUMMARY_STORAGE_DIR", os.path.join(os.getcwd(),
 async def ping():
     return {"status": "pong"}
 
-@router.post("/extract/", response_model=SummaryResponse)
+@router.post("/extract", response_model=SummaryResponse)
 async def extract_scientific_summary(file: UploadFile = File(...)):
     try:
         logger.info(f"Received file: {file.filename}")
+
+        # ✅ Save permanently to summaries folder
         pdf_path = await save_uploaded_file(file)
+        logger.info(f"Saved PDF to: {pdf_path}")
+
+        # 🧠 Run workflow
         summary_result = summarization_workflow.kickoff(inputs={"pdf_path": pdf_path})
+
+        # 💰 Track LLM token cost
         token_count = (
             summarization_workflow.usage_metrics.prompt_tokens +
             summarization_workflow.usage_metrics.completion_tokens
         )
         LLMCost.update_cost(process_name, token_count)
+
         return summary_result.to_dict()
+
     except Exception as e:
         logger.error("Error during summarization", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
@@ -41,7 +51,7 @@ async def load_summary(filename: str):
     with open(path, "r", encoding="utf-8") as f:
         return {"message": "Summary loaded successfully", "content": f.read(), "filename": filename}
 
-@router.post("/save/", response_model=dict)
+@router.post("/save", response_model=dict)
 async def save_summary(data: SummaryResponse):
     filename = f"{os.path.splitext(data.filename)[0]}.txt"
     path = os.path.join(SUMMARY_STORAGE_DIR, filename)
