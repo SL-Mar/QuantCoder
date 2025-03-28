@@ -169,7 +169,7 @@ And follow its dedicated [README](https://github.com/SL-Mar/QuantCoder/blob/quan
 
 ## 📄 License
 
-This project is licensed under the **Apache License 2.0**. See the [LICENSE](LICENSE) file for full details.
+This project is licensed under the **Apache License 2.0**. See the [LICENSE](LICENSE.md) file for full details.
 
 The Apache License 2.0 allows you to freely use, modify, and distribute this project, provided you include the original copyright notice and the license text. For more information, visit the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) website.
 
