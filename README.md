@@ -1,3 +1,5 @@
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 # QuantCoder_FS — Full-Stack AI Assistant for Traders
 
 QuantCoder_FS is a full-stack, AI-driven application that streamlines financial research and trading strategy development. The current open-source version focuses on the PDF summarization workflow, implemented as a FastAPI backend powered by CrewAI agents, and now includes a responsive **Next.js frontend** for a seamless user experience. Future updates will introduce additional workflows such as fundamentals analysis and algorithmic code generation.
@@ -167,7 +169,11 @@ And follow its dedicated [README](https://github.com/SL-Mar/QuantCoder/blob/quan
 
 ## 📄 License
 
-To be defined. This project is currently open for contribution and collaboration.
+This project is licensed under the **Apache License 2.0**. See the [LICENSE](LICENSE.md) file for full details.
+
+The Apache License 2.0 allows you to freely use, modify, and distribute this project, provided you include the original copyright notice and the license text. For more information, visit the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) website.
+
+This project is open for contribution and collaboration. Feel free to fork, submit issues, and create pull requests!
 
 ---
 
