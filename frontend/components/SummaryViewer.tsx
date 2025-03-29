@@ -9,6 +9,8 @@ import {
   faCopy,
   faCheckCircle,
 } from '@fortawesome/free-solid-svg-icons';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface SummaryViewerProps {
   summary: Summary | null;
@@ -42,6 +44,7 @@ export default function SummaryViewer({
     setTimeout(() => setSaved(false), 1500);
   };
 
+  // Keep for fallback or testing
   const renderWithBoldSections = (text: string) => {
     const lines = text.split('\n');
     const sectionTitlePattern = /^([A-Z][A-Za-z0-9\s]{2,50})\s*$/;
@@ -53,7 +56,10 @@ export default function SummaryViewer({
         lines[idx + 1].match(/^[-=]{3,}$/)
       ) {
         return (
-          <p key={idx} className="font-bold text-indigo-300 mt-6 mb-2 text-base tracking-wide uppercase">
+          <p
+            key={idx}
+            className="font-bold text-indigo-300 mt-6 mb-2 text-base tracking-wide uppercase"
+          >
             {line.trim()}
           </p>
         );
@@ -110,11 +116,36 @@ export default function SummaryViewer({
       {/* Summary Text */}
       <div className="flex-grow overflow-auto px-4 pb-4">
         {summary ? (
-          <div className="bg-gray-900 text-gray-100 rounded-md px-6 py-4 text-[0.95rem] font-serif whitespace-pre-wrap overflow-auto h-full shadow-inner">
-            {renderWithBoldSections(summary.summary)}
+          <div className="bg-gray-900 text-gray-100 rounded-md px-6 py-4 text-[0.95rem] font-serif overflow-auto h-full shadow-inner">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                h1: ({ node, ...props }) => (
+                  <h1 className="text-2xl text-indigo-400 font-bold mt-4 mb-2" {...props} />
+                ),
+                h2: ({ node, ...props }) => (
+                  <h2 className="text-xl text-indigo-300 font-semibold mt-3 mb-2" {...props} />
+                ),
+                h3: ({ node, ...props }) => (
+                  <h3 className="text-lg text-indigo-200 font-medium mt-2 mb-1" {...props} />
+                ),
+                p: ({ node, ...props }) => (
+                  <p className="text-gray-100 leading-relaxed mb-3" {...props} />
+                ),
+                ul: ({ node, ...props }) => (
+                  <ul className="list-disc list-inside mb-4 pl-4" {...props} />
+                ),
+                li: ({ node, ...props }) => (
+                  <li className="mb-1" {...props} />
+                ),
+              }}
+            >
+              {summary.summary}
+            </ReactMarkdown>
           </div>
         ) : (
-          pdfFile && !summary && (
+          pdfFile &&
+          !summary && (
             <div className="text-center text-gray-500 flex-grow flex items-center justify-center">
               Select extract to generate summary
             </div>

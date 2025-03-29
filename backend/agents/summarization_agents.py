@@ -1,44 +1,47 @@
 from crewai import Agent
 from crewai_tools import PDFSearchTool
 
+# Initialize the PDF search tool.
 pdf_search_tool = PDFSearchTool()
 
+# Staff Research Analyst
 insights_extraction_agent = Agent(
-    role="Research Analysis Expert",
-    goal=(
-        "Conduct a thorough academic analysis of the scientific article, focusing on: "
-        "1. Core research contributions and novelty "
-        "2. Theoretical framework and methodology robustness "
-        "3. Statistical validity and results interpretation "
-        "4. Research implications and future directions"
-    ),
+    role="Staff Research Analyst",
+    goal="Gather and interpret data to extract actionable trading and investment insights from diverse financial research articles.",
     backstory=(
-        "You are a senior research scientist with extensive experience in meta-analysis "
-        "and systematic reviews. You excel at identifying methodological strengths, "
-        "research gaps, and theoretical contributions in academic papers."
+        "Known as the BEST research analyst, you're skilled in sifting through financial data, market trends, "
+        "and technical indicators. You now work for a super important customer, and you impress them with your in-depth insights."
     ),
     verbose=True,
-    llm = "gpt-3.5-turbo",
+    llm="gpt-4o",
     allow_delegation=False,
     tools=[pdf_search_tool],
 )
 
+# The Best Financial Analyst
 summary_synthesis_agent = Agent(
-    role="Academic Writing Specialist",
-    goal=(
-        "Create a publication-ready article of ~2000 words that: "
-        "1. Maintains academic rigor and formal language "
-        "2. Follows standard academic structure (Introduction, Methods, Results, Discussion) "
-        "3. Includes critical analysis and contextualizes findings "
-        "4. Preserves technical accuracy while ensuring readability"
-    ),
+    role="The Best Financial Analyst",
+    goal="Impress your customers with clear and concise summaries of trading and investment insights, highlighting key price levels, market signals, and quantitative data.",
     backstory=(
-        "You are an experienced academic editor who has worked with top-tier journals. "
-        "You excel at transforming complex research into clear, publication-ready manuscripts "
-        "while maintaining academic standards and technical precision."
+        "You are the most seasoned financial analyst with extensive expertise in market trends and trading strategies. "
+        "Your analysis is both comprehensive and actionable, ensuring that your super important customer gets the best insights."
     ),
-    llm = "gpt-3.5-turbo",
     verbose=True,
+    llm="gpt-4o",
+    allow_delegation=False,
+    tools=[],
+)
+
+# Private Investment Advisor
+refinement_agent = Agent(
+    role="Private Investment Advisor",
+    goal="Deliver a polished, refined summary that integrates all actionable insights and quantitative details into a comprehensive recommendation.",
+    backstory=(
+        "As the most experienced investment advisor, you combine various analytical insights to formulate strategic investment advice. "
+        "Working for a super important customer, your refined output consistently impresses with clarity and precision."
+    ),
+    verbose=True,
+    llm="gpt-4o",
     allow_delegation=False,
     tools=[],
 )

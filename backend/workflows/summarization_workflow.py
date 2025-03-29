@@ -1,76 +1,67 @@
 from crewai import Crew, Task, Process
 from langchain_openai import ChatOpenAI
-from backend.agents.summarization_agents import insights_extraction_agent, summary_synthesis_agent
-from backend.models.summarymodel import SummaryResponse
+from backend.models.summarymodel import SummaryResponse  # Assumed Pydantic model for output
 from backend.core.config import settings
-from langchain_mistralai import ChatMistralAI
 
+# Import agents defined in agents.py
+from backend.agents.summarization_agents import insights_extraction_agent, summary_synthesis_agent, refinement_agent
 
-manager_llm = ChatOpenAI(model=settings.model_name, api_key=settings.openai_api_key, temperature=0)
+# Initialize the manager LLM with a low temperature for consistency.
+manager_llm = ChatOpenAI(
+    model=settings.model_name, 
+    api_key=settings.openai_api_key, 
+    temperature=0
+)
 
-# Enhanced tasks with more specific requirements
+# Task 1: Extract actionable trading insights from the FX article.
 insights_task = Task(
     description=(
-        "Analyze the article at {pdf_path} following these steps:\n"
-        "1. Identify the theoretical framework and research paradigm\n"
-        "2. Evaluate methodology robustness and statistical approaches\n"
-        "3. Assess result validity and significance\n"
-        "4. Extract key tables, figures, and statistical findings\n"
-        "5. Analyze limitations and future research directions\n"
-        "6. Identify connections to existing literature\n"
-        "Provide a structured analysis plan with these components."
+        "Extract actionable insights from the research article at {pdf_path}. "
+        "When relavant, identify trading set-ups, investment themes, economical prospects and forecats, reversion and trading patterns, key price benchmarks (e.g., moving averages), risk factors, and specific recommendations for long and short strategies. "
+        "Include any relevant quantitative data such as statistical test results or other indicators."
     ),
     expected_output=(
-        "A detailed academic analysis framework including:\n"
-        "- Theoretical foundation\n"
-        "- Methodological assessment\n"
-        "- Statistical validity\n"
-        "- Key findings and implications\n"
-        "- Research limitations and future directions"
+        "A detailed list of actionable trading insights including key signals, quantitative details, and strategic recommendations."
     ),
     agent=insights_extraction_agent,
 )
 
+# Task 2: Synthesize a concise summary based on the extracted insights.
 summary_task = Task(
     description=(
-        "Create a publication-ready article (~2000 words) following this structure:\n\n"
-        "1. Abstract (150 words)\n"
-        "   - Research context, objectives, methods, key findings, implications\n\n"
-        "2. Introduction (400 words)\n"
-        "   - Research context and significance\n"
-        "   - Clear research objectives\n"
-        "   - Theoretical framework\n\n"
-        "3. Methods (450 words)\n"
-        "   - Detailed methodology\n"
-        "   - Statistical approaches\n"
-        "   - Validation methods\n\n"
-        "4. Results (500 words)\n"
-        "   - Key findings with statistical evidence\n"
-        "   - Data visualization descriptions\n\n"
-        "5. Discussion (400 words)\n"
-        "   - Interpretation of results\n"
-        "   - Theoretical and practical implications\n"
-        "   - Research limitations\n\n"
-        "6. Conclusion (100 words)\n"
-        "   - Key takeaways\n"
-        "   - Future research directions\n\n"
-        "Use formal academic language, maintain technical precision, "
-        "and ensure proper transitions between sections."
+        "Using the insights extracted from the article, create a concise summary (~1000 words) in bullet-point format. "
+        "Highlight key price levels, market signals, risk management tips, and actionable recommendations for FX trading. "
+        "Incorporate any quantitative or statistical evidence found."
     ),
     expected_output=(
-        "A ScienceSummary object containing:\n"
+        "A SummaryResponse object containing:\n"
         "- filename: source PDF name\n"
-        "- summary: complete article text\n"
- 
+        "- summary: a bullet-point summary with detailed actionable trading insights."
     ),
     context=[insights_task],
     output_pydantic=SummaryResponse,
     agent=summary_synthesis_agent,
 )
 
+# Task 3: Refine the synthesized summary for clarity and completeness.
+refinement_task = Task(
+    description=(
+        "Refine the trading insights summary generated in the previous task. Improve the clarity, coherence, and completeness of the report. "
+        "Ensure all key actionable insights, including quantitative details, are clearly articulated in a bullet-point format."
+    ),
+    expected_output=(
+        "A refined SummaryResponse object with a polished and comprehensive bullet-point summary of actionable trading insights,"
+        "written in valid Markdown, with a title, headings for each major section, blank line after each headings, bullet points for each insight, and any tables or lists in Markdown format."
+    ),
+    context=[summary_task],
+    output_pydantic=SummaryResponse,
+    agent=refinement_agent,
+)
+
+# Build the complete workflow with iterative refinement.
 summarization_workflow = Crew(
-    agents=[insights_extraction_agent, summary_synthesis_agent],
-    tasks=[insights_task, summary_task],
+    agents=[insights_extraction_agent, summary_synthesis_agent, refinement_agent],
+    tasks=[insights_task, summary_task, refinement_task],
     manager_llm=manager_llm,
     process=Process.sequential,
     verbose=True,
